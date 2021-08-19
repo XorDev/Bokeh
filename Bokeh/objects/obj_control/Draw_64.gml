@@ -1,5 +1,7 @@
 ///@desc Draw with shader
 
+if keyboard_check(vk_escape) game_end();
+
 var _tex,_w,_h;
 _tex = surface_get_texture(application_surface);
 _w = texture_get_texel_width(_tex);
