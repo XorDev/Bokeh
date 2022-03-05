@@ -23,7 +23,7 @@ vec4 bokeh(sampler2D tex, vec2 coord, float radius)
 	vec2 point = vec2(scale,0);
 	
 	//Golden angle rotation matrix
-	mat2 ang = mat2(-.737369,.675490,-.675490,-.737369);
+	mat2 ang = mat2(-0.7373688, -0.6754904, 0.6754904,  -0.7373688);
 	
 	//Look through all the samples
 	for(float i = 0.;i<SAMPLES;i++)
