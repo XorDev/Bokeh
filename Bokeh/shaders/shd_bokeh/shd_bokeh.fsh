@@ -6,10 +6,10 @@ varying vec4 v_color;
 varying vec2 v_coord;
 
 //Number of texture samples. Higher = smoother, slower
-#define SAMPLES 500.
+#define SAMPLES 500.0
 
 //Exposure level (1 = default, higher = more bokeh)
-#define EXP (coord.x>.5?10.:1.)
+#define GAMMA (coord.x>.5?4.:1.)
 
 vec4 bokeh(sampler2D tex, vec2 coord, float radius)
 {
@@ -26,27 +26,27 @@ vec4 bokeh(sampler2D tex, vec2 coord, float radius)
 	mat2 ang = mat2(-0.7373688, -0.6754904, 0.6754904,  -0.7373688);
 	
 	//Look through all the samples
-	for(float i = 0.;i<SAMPLES;i++)
+	for(float i = 0.0;i<SAMPLES;i++)
 	{
 		//Rotate point direction
 		point *= ang;
 		
 		//Get sample coordinates
-		vec2 uv = coord + point*sqrt(i)*texel;
+		vec2 uv = coord + point * sqrt(i) * texel;
 		//Sample texture
         vec4 samp = texture2D(tex,uv);
 		
 		//Add sample to total
-		blur += exp(samp*EXP);
+		blur += pow(samp, vec4(GAMMA));
 	}
 	//Get sample average
 	blur /= SAMPLES;
 	//Correct for exposure
-	return log(blur)/EXP;
+	return pow(blur, 1.0/vec4(GAMMA));
 }
 
 void main()
 {
-	float radius = (v_coord-pos).y*20.; // pos.y*20.
+	float radius = pos.y*20.; // (v_coord-pos).y*20.;
     gl_FragColor = bokeh(gm_BaseTexture, v_coord, radius);
 }

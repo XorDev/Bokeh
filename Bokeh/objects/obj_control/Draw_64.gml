@@ -17,5 +17,5 @@ shader_reset();
 draw_set_color(0);
 draw_line(room_width/2,0,room_width/2,room_height);
 
-draw_text(8,8,"Stardard blur");
-draw_text(room_width/2+8,8,"Bokeh blur");
+draw_text(8,8,"Standard Blur");
+draw_text(room_width/2+8,8,"Gamma Blur");
